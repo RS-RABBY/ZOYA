@@ -13,23 +13,36 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Web App
+        run: npm run build
+
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
+      - name: Sync Capacitor Android
+        run: npx cap sync android
 
-      - name: Generate dummy debug keystore
-        run: keytool -genkey -v -keystore debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "C=US, O=Android, CN=Android Debug"
+      - name: Make Gradle executable
+        run: chmod +x android/gradlew
 
       - name: Build Debug APK
-        run: gradle assembleDebug
+        working-directory: android
+        run: ./gradlew assembleDebug
 
       - name: Upload all APKs
         uses: actions/upload-artifact@v4
         with:
-          name: my-android-app
-          path: '**/*.apk'
+          name: ZOYA-debug-APK
+          path: 'android/app/build/outputs/apk/debug/*.apk'
