@@ -1,0 +1,10 @@
+{
+  "name": "JOYA Assistant",
+  "description": "A real-time, voice-driven AI assistant with a flirty and confident personality, using Gemini Live.",
+  "requestFramePermissions": [
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
