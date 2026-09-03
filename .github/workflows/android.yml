@@ -1,19 +1,20 @@
-name: Build Android APK
+name: Build ZOYA Android APK
 
 on:
-  push:
-    branches: [ "main" ]
   workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -25,24 +26,27 @@ jobs:
       - name: Build Web App
         run: npm run build
 
-      - name: Set up JDK 17
+      - name: Setup Java
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
-          distribution: 'temurin'
+          distribution: temurin
+          java-version: 17
 
-      - name: Sync Capacitor Android
+      - name: Sync Capacitor
         run: npx cap sync android
 
       - name: Make Gradle executable
         run: chmod +x android/gradlew
 
-      - name: Build Debug APK
+      - name: Build Android Debug APK
         working-directory: android
         run: ./gradlew assembleDebug
 
-      - name: Upload all APKs
+      - name: Find APK
+        run: find android -type f -name "*.apk" -print
+
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: ZOYA-debug-APK
-          path: 'android/app/build/outputs/apk/debug/*.apk'
+          path: android/app/build/outputs/apk/debug/*.apk
