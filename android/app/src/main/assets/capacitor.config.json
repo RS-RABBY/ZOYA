@@ -1,0 +1,6 @@
+{
+	"appId": "com.zoya.ai",
+	"appName": "ZOYA",
+	"webDir": "dist",
+	"bundledWebRuntime": false
+}

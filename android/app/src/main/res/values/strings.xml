@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">ZOYA</string>
+    <string name="title_activity_main">ZOYA</string>
+    <string name="package_name">com.zoya.ai</string>
+    <string name="custom_url_scheme">com.zoya.ai</string>
+</resources>
